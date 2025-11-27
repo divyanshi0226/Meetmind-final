@@ -49,12 +49,16 @@ function Summaries() {
 
       console.log('Fetching summaries from API...');
       
-      const response = await fetch('http://localhost:5000/api/summaries', {
-        headers: { 
+      const response = await fetch(
+    `${process.env.REACT_APP_API_URL || 'http://localhost:5000'}/api/summaries`,
+        {
+         headers: { 
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
         }
-      });
+      }
+    );
+
       
       console.log('Response status:', response.status);
       
