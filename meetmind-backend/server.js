@@ -24,10 +24,12 @@ const corsOptions={
     
     // Check if origin is allowed or ends with .vercel.app
     if (allowedOrigins.includes(origin) || origin.endsWith('.vercel.app')) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
+      return callback(null, true);
     }
+    
+    // Reject other origins
+    console.warn('⚠️ CORS blocked origin:', origin);
+    callback(null, false);
   },
   credentials: true,
   optionsSuccessStatus: 200,
