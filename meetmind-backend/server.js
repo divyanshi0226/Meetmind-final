@@ -65,8 +65,6 @@ async function connectDB() {
     }
 
     await mongoose.connect(mongoURI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
       serverSelectionTimeoutMS: 10000,
       socketTimeoutMS: 45000,
     });
@@ -85,11 +83,10 @@ async function connectDB() {
     return true;
   } catch (err) {
     console.error('❌ MongoDB Error:', err.message);
-    process.exit(1);
+    console.warn('⚠️ Server will continue, but database operations will fail');
+    return false;
   }
 }
-
-connectDB();
 
 // ✅ ROUTES
 app.use('/api/auth', require('./routes/auth'));
@@ -120,6 +117,9 @@ const server = app.listen(PORT,'0.0.0.0', () => {
   console.log('='.repeat(60));
   console.log(`✅ Server Ready on ${PORT}`);
   console.log('='.repeat(60) + '\n');
+  
+  // Connect to MongoDB after server starts
+  connectDB();
 });
 
 process.on('SIGINT', async () => {
