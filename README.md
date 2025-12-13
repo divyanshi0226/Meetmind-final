@@ -79,6 +79,3 @@ npm install
 npm start
 ```
 
-
-
-⭐ *If you like this project, consider starring the repository!*
